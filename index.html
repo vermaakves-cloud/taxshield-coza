@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxShield | Autonomous SARS Tax Compliance & Bookkeeping</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white selection:bg-amber-500 selection:text-slate-950">
+
+    <!-- 🌐 Nav Header -->
+    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🛡️</span>
+                <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">taxshield.co.za</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#features" class="text-sm text-slate-400 hover:text-white transition">Features</a>
+                <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition">Pricing</a>
+                <a href="https://taxshield.online" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-slate-950 text-sm font-bold px-4 py-2 rounded-lg transition shadow-lg shadow-amber-500/20">Launch App</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 🚀 Hero Section -->
+    <section class="relative pt-24 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.06),transparent_50%)]"></div>
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <span class="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">🇿🇦 Automated SARS Compliance for SA Freelancers</span>
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mt-6 mb-8 leading-tight">
+                Put Your South African <br class="hidden md:block">
+                <span class="bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 bg-clip-text text-transparent">Taxes on Pure Autopilot</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10">
+                Stop stressing over eFiling deadlines. Drag and drop your FNB, Capitec, or Standard Bank statements. Our AI agent instantly categorizes deductions, calculates provisional tax, and prepares audit-proof SARS submissions.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://taxshield.online" class="w-full sm:w-auto text-center bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-4 rounded-xl transition duration-200">
+                    Open Tax Portal
+                </a>
+                <a href="#pricing" class="w-full sm:w-auto text-center border border-slate-800 hover:border-slate-700 text-white px-8 py-4 rounded-xl transition">
+                    View Subscriptions (ZAR)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📊 Pricing Section -->
+    <section id="pricing" class="py-20 border-t border-slate-900 bg-slate-950/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">Simple, Local Pricing. Heavy Deductions.</h2>
+                <p class="text-slate-400 mt-2">Unlock high-performance financial intelligence designed specifically for the South African tax landscape.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Starter Tier -->
+                <div class="bg-slate-900/60 border border-slate-850 p-8 rounded-2xl">
+                    <h3 class="text-xl font-semibold text-white">Starter</h3>
+                    <p class="text-slate-400 text-sm mt-1">For freelancers & sole proprietors</p>
+                    <div class="my-4">
+                        <span class="text-4xl font-bold text-white">R199</span>
+                        <span class="text-slate-400">/ month</span>
+                    </div>
+                    <ul class="space-y-3 text-slate-300 text-sm mb-8">
+                        <li class="flex items-center gap-2">✅ Auto-bank statement parsing (FNB, Capitec, etc.)</li>
+                        <li class="flex items-center">✅ Business expense categorization helper</li>
+                        <li class="flex items-center">✅ Provisional tax liability estimater</li>
+                        <li class="text-slate-500 line-through">❌ Direct SARS eFiling upload packet</li>
+                    </ul>
+                    <a href="YOUR_YOCO_STARTER_LINK_HERE" class="block text-center border border-slate-800 hover:border-slate-700 text-white font-bold py-3 rounded-xl transition">
+                        Subscribe Now
+                    </a>
+                </div>
+
+                <!-- Pro Tier -->
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl relative">
+                    <div class="absolute -top-3 right-4 bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full">POPULAR</div>
+                    <h3 class="text-xl font-semibold text-white">Pro</h3>
+                    <p class="text-slate-400 text-sm mt-1">For active small businesses & agencies</p>
+                    <div class="my-4">
+                        <span class="text-4xl font-bold text-white">R499</span>
+                        <span class="text-slate-400">/ month</span>
+                    </div>
+                    <ul class="space-y-3 text-slate-300 text-sm mb-8">
+                        <li class="flex items-center gap-2">✅ Everything in Starter</li>
+                        <li class="flex items-center">✅ Secure Google Drive integration for invoices</li>
+                        <li class="flex items-center">✅ Direct SARS-ready XML output packet</li>
+                        <li class="text-amber-400 font-medium">🇿🇦 Direct accounting sandbox environment</li>
+                    </ul>
+                    <a href="YOUR_YOCO_PRO_LINK_HERE" class="block text-center bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold py-3 rounded-xl hover:opacity-90 transition">
+                        Subscribe Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🚪 Footer -->
+    <footer class="border-t border-slate-900 py-10 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
+            <p>&copy; 2026 TaxShield. All rights reserved. Built in South Africa 🇿🇦</p>
+        </div>
+    </footer>
+</body>
+</html>
