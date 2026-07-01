@@ -35,7 +35,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── BACKGROUND LAYER 1: Asset Texture Image ── */
+        /* ── BACKGROUND LAYER 1: Asset Texture Image (Increased opacity to 0.35 for visibility) ── */
         .bg-texture-layer {
             position: fixed;
             inset: 0;
@@ -43,7 +43,7 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.20;
+            opacity: 0.35;
             z-index: -2;
             pointer-events: none;
         }
@@ -336,8 +336,18 @@
             margin: 0;
         }
 
-        /* ── LOGO SVG GLOW ── */
-        .logo-glow { filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.38)); }
+        /* ── LOGO IMAGE GLOW ── */
+        .logo-glow { 
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.38));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-glow img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
 
         /* ── ICON BOX ── */
         .icon-box {
@@ -426,41 +436,8 @@
 
             <!-- LOGO -->
             <div class="flex items-center gap-3">
-                <div class="logo-glow">
-                    <svg class="h-10 w-10" viewBox="0 0 44 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="shieldBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%"   stop-color="#94a3b8"/>
-                                <stop offset="30%"  stop-color="#e2e8f0"/>
-                                <stop offset="65%"  stop-color="#64748b"/>
-                                <stop offset="100%" stop-color="#1e293b"/>
-                            </linearGradient>
-                            <linearGradient id="checkGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%"   stop-color="#fde68a"/>
-                                <stop offset="50%"  stop-color="#f59e0b"/>
-                                <stop offset="100%" stop-color="#b45309"/>
-                            </linearGradient>
-                            <linearGradient id="checkGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%"   stop-color="#6ee7b7"/>
-                                <stop offset="100%" stop-color="#047857"/>
-                            </linearGradient>
-                            <filter id="shieldDrop">
-                                <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="rgba(0,0,0,0.6)"/>
-                            </filter>
-                        </defs>
-                        <path d="M22 2L4 10v13c0 10.5 7.7 20.3 18 22.9C33.3 43.3 41 33.5 41 23V10L22 2z"
-                              fill="url(#shieldBody)" filter="url(#shieldDrop)"/>
-                        <path d="M22 2L4 10v13c0 10.5 7.7 20.3 18 22.9C33.3 43.3 41 33.5 41 23V10L22 2z"
-                              fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.7"/>
-                        <!-- Green layer (depth) -->
-                        <path d="M13 24.5l5.5 5.5L33 16.5"
-                              stroke="url(#checkGreen)" stroke-width="3.8"
-                              stroke-linecap="round" stroke-linejoin="round" opacity="0.80"/>
-                        <!-- Gold layer (foreground) -->
-                        <path d="M14.5 26l4.5 4.5 12.5-12.5"
-                              stroke="url(#checkGold)" stroke-width="3.2"
-                              stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                <div class="logo-glow h-10 w-10">
+                    <img src="/assets/logo-3d.png" alt="TAX-SHIELD SA Logo" class="h-10 w-10 object-contain">
                 </div>
                 <div class="flex items-baseline gap-1">
                     <span class="text-lg md:text-xl font-black tracking-tight text-white" style="text-shadow:0 0 24px rgba(255,255,255,0.1);">TAX-SHIELD</span>
