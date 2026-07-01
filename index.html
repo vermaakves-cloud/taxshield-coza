@@ -35,7 +35,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── BACKGROUND LAYER 1: Asset Texture Image (Increased opacity to 0.35 for visibility) ── */
+        /* ── BACKGROUND LAYER 1: Asset Texture Image (100% VISIBLE - opacity: 1.0) ── */
         .bg-texture-layer {
             position: fixed;
             inset: 0;
@@ -43,7 +43,7 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.35;
+            opacity: 1.0;
             z-index: -2;
             pointer-events: none;
         }
@@ -336,17 +336,24 @@
             margin: 0;
         }
 
-        /* ── LOGO IMAGE GLOW ── */
+        /* ── LOGO IMAGE GLOW & ENHANCED STYLING ── */
         .logo-glow { 
-            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.38));
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.55));
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
         }
         .logo-glow img {
             display: block;
             max-width: 100%;
-            height: auto;
+            max-height: 100%;
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            image-rendering: smooth;
         }
 
         /* ── ICON BOX ── */
@@ -436,8 +443,8 @@
 
             <!-- LOGO -->
             <div class="flex items-center gap-3">
-                <div class="logo-glow h-10 w-10">
-                    <img src="/assets/logo-3d.png" alt="TAX-SHIELD SA Logo" class="h-10 w-10 object-contain">
+                <div class="logo-glow">
+                    <img src="/assets/logo-3d.png" alt="TAX-SHIELD SA Logo" loading="eager">
                 </div>
                 <div class="flex items-baseline gap-1">
                     <span class="text-lg md:text-xl font-black tracking-tight text-white" style="text-shadow:0 0 24px rgba(255,255,255,0.1);">TAX-SHIELD</span>
