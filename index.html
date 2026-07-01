@@ -4,426 +4,909 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TAX-SHIELD SA | Institutional Multi-Platform Crypto Tax Audit Simulator</title>
-    
-    <!-- Load Tailwind CSS CDN -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Load PapaParse.js for zero-database local client-side CSV processing -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <!-- Load Ethers.js v6 CDN for Web3 Smart Contract Transfers -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 
-    <!-- Configure Tailwind theme colors and styles -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
+
     <style>
+        /* ================================================================
+           TAX-SHIELD SA — LUXURY PREMIUM DESIGN SYSTEM v3.0
+           ================================================================ */
+
+        *, *::before, *::after { box-sizing: border-box; }
+
         body {
-            background-color: #090d16; /* Updated to new design spec */
+            background-color: #020617;
+            font-family: 'Inter', sans-serif;
+            color: #f1f5f9;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
+
+        /* ── BACKGROUND LAYER 1: Asset Texture Image ── */
+        .bg-texture-layer {
+            position: fixed;
+            inset: 0;
+            background-image: url('/assets/crypto-bg.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.20;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* ── BACKGROUND LAYER 2: Radial Studio Gradient ── */
+        .bg-gradient-layer {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 140% 60% at 50% -5%,
+                    rgba(251, 191, 36, 0.08) 0%,
+                    rgba(15, 23, 42, 0.55) 38%,
+                    #020617 70%),
+                radial-gradient(ellipse 55% 35% at 85% 90%,
+                    rgba(15, 23, 42, 0.35) 0%,
+                    transparent 65%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ── GLASSMORPHISM: Main Workspace Panel ── */
+        .glass-panel {
+            background: rgba(12, 20, 40, 0.62);
+            backdrop-filter: blur(28px) saturate(1.6);
+            -webkit-backdrop-filter: blur(28px) saturate(1.6);
+            border: 1px solid rgba(245, 158, 11, 0.18);
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.65),
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 0 80px rgba(245, 158, 11, 0.025);
+        }
+
+        /* ── GLASSMORPHISM: Standard Metric Card ── */
+        .glass-card {
+            background: rgba(3, 7, 18, 0.58);
+            backdrop-filter: blur(16px) saturate(1.3);
+            -webkit-backdrop-filter: blur(16px) saturate(1.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        /* ── GLASSMORPHISM: Gold-Accent Metric Card ── */
+        .glass-card-gold {
+            background: rgba(3, 7, 18, 0.58);
+            backdrop-filter: blur(16px) saturate(1.3);
+            -webkit-backdrop-filter: blur(16px) saturate(1.3);
+            border: 1px solid rgba(245, 158, 11, 0.32);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.5),
+                0 0 35px rgba(245, 158, 11, 0.07),
+                inset 0 1px 0 rgba(245, 158, 11, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* ── GLASSMORPHISM: Sticky Navigation Header ── */
+        .header-glass {
+            background: rgba(2, 6, 23, 0.88);
+            backdrop-filter: blur(32px) saturate(2);
+            -webkit-backdrop-filter: blur(32px) saturate(2);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.10);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.55);
+        }
+
+        /* ── GLASSMORPHISM: Web3 Payment Modal ── */
+        .glass-modal {
+            background: rgba(6, 13, 30, 0.94);
+            backdrop-filter: blur(36px) saturate(1.8);
+            -webkit-backdrop-filter: blur(36px) saturate(1.8);
+            border: 1px solid rgba(245, 158, 11, 0.22);
+            box-shadow:
+                0 35px 90px rgba(0, 0, 0, 0.75),
+                0 0 70px rgba(245, 158, 11, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        /* ── GLASSMORPHISM: FAQ Accordion Panel ── */
+        .glass-faq {
+            background: rgba(6, 12, 28, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-faq:hover {
+            border-color: rgba(245, 158, 11, 0.18);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 25px rgba(245, 158, 11, 0.04);
+        }
+
+        /* ── GLASSMORPHISM: Toast Notification ── */
+        .glass-toast {
+            background: rgba(6, 13, 30, 0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(245, 158, 11, 0.22);
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.65), 0 0 30px rgba(245, 158, 11, 0.06);
+        }
+
+        /* ── METALLIC GOLD GRADIENT TEXT ── */
+        .text-gold-metallic {
+            background: linear-gradient(
+                135deg,
+                #fde68a 0%,
+                #f5c842 20%,
+                #f59e0b 45%,
+                #d97706 68%,
+                #fbbf24 84%,
+                #f5e07a 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.22));
+        }
+
+        /* ── CTA: Metallic Gold Button ── */
+        .btn-gold-metallic {
+            background: linear-gradient(
+                135deg,
+                #f5e27a 0%,
+                #f5c220 18%,
+                #f59e0b 42%,
+                #d97706 68%,
+                #b45309 88%,
+                #92400e 100%
+            );
+            box-shadow:
+                0 0 24px rgba(245, 158, 11, 0.42),
+                0 0 55px rgba(245, 158, 11, 0.14),
+                0 6px 22px rgba(0, 0, 0, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.28),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            color: #1a0c02;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gold-metallic::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -110%;
+            width: 55%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            transform: skewX(-18deg);
+            transition: left 0.65s ease;
+        }
+        .btn-gold-metallic:hover::before { left: 160%; }
+        .btn-gold-metallic:hover {
+            box-shadow:
+                0 0 38px rgba(245, 158, 11, 0.65),
+                0 0 80px rgba(245, 158, 11, 0.22),
+                0 8px 28px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+        .btn-gold-metallic:active { transform: translateY(0px); }
+
+        /* ── SECONDARY BUTTON ── */
+        .btn-secondary {
+            background: rgba(12, 20, 40, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #64748b;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(30, 41, 59, 0.75);
+            border-color: rgba(245, 158, 11, 0.18);
+            color: #cbd5e1;
+        }
+
+        /* ── NEON ALERT STRIPS ── */
+        .neon-alert-high {
+            background: rgba(127, 29, 29, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.42);
+            box-shadow: 0 0 22px rgba(239, 68, 68, 0.11), inset 0 1px 0 rgba(239, 68, 68, 0.14);
+            backdrop-filter: blur(8px);
+        }
+        .neon-alert-low {
+            background: rgba(120, 53, 15, 0.18);
+            border: 1px solid rgba(245, 158, 11, 0.42);
+            box-shadow: 0 0 22px rgba(245, 158, 11, 0.11), inset 0 1px 0 rgba(245, 158, 11, 0.14);
+            backdrop-filter: blur(8px);
+        }
+        .neon-alert-loss {
+            background: rgba(6, 78, 59, 0.18);
+            border: 1px solid rgba(52, 211, 153, 0.38);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.09), inset 0 1px 0 rgba(52, 211, 153, 0.12);
+            backdrop-filter: blur(8px);
+        }
+
+        /* ── DROP ZONE ── */
+        .drop-zone-premium {
+            background: rgba(3, 7, 18, 0.35);
+            border: 2px dashed rgba(100, 116, 139, 0.32);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .drop-zone-premium:hover {
+            border-color: rgba(245, 158, 11, 0.45);
+            background: rgba(15, 23, 42, 0.45);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.07), inset 0 0 40px rgba(245, 158, 11, 0.025);
+        }
+
+        /* ── REGULATORY BANNER ── */
+        .regulatory-banner {
+            background: rgba(120, 53, 15, 0.18);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.18);
+            backdrop-filter: blur(8px);
+        }
+
+        /* ── STATUS BADGE ── */
+        .status-badge {
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(245, 158, 11, 0.20);
+            backdrop-filter: blur(8px);
+        }
+
+        /* ── BADGE ── */
+        .badge-gold {
+            background: rgba(245, 158, 11, 0.10);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            color: #fbbf24;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.09);
+        }
+
+        /* ── PROGRESS BAR ── */
+        .progress-track {
+            background: rgba(3, 7, 18, 0.65);
+            border: 1px solid rgba(245, 158, 11, 0.12);
+        }
+        #progress-bar {
+            background: linear-gradient(90deg, #d97706, #f59e0b, #fbbf24);
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.55);
+            transition: width 0.35s ease;
+            height: 100%;
+        }
+
+        /* ── BLUR PREVIEW (toggled by JS) ── */
         .blur-preview {
             filter: blur(8px);
             user-select: none;
             pointer-events: none;
         }
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+
+        /* ── PAYWALL / UNLOCKED OVERLAYS ── */
+        #paywall-overlay {
+            background: linear-gradient(170deg, rgba(2, 6, 23, 0.88) 0%, rgba(6, 13, 32, 0.96) 100%);
+            backdrop-filter: blur(5px);
         }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
+        #unlocked-dashboard {
+            background: linear-gradient(170deg, rgba(2, 6, 23, 0.92) 0%, rgba(6, 13, 32, 0.98) 100%);
         }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
+
+        /* ── PRICE BOX ── */
+        .price-box {
+            background: rgba(3, 7, 18, 0.65);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            box-shadow: 0 0 22px rgba(245, 158, 11, 0.07), inset 0 1px 0 rgba(245, 158, 11, 0.08);
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
+
+        /* ── VDP MANUAL BOX ── */
+        .vdp-box {
+            background: rgba(3, 7, 18, 0.55);
+            border: 1px solid rgba(245, 158, 11, 0.10);
         }
+
+        /* ── MODAL INFO ROW ── */
+        .modal-info-row {
+            background: rgba(3, 7, 18, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ── TABLE HEADER DIVIDER ── */
+        .table-header-divider {
+            border-bottom: 1px solid rgba(245, 158, 11, 0.10);
+        }
+
+        /* ── GOLD DIVIDER LINE ── */
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.25), transparent);
+            border: none;
+            margin: 0;
+        }
+
+        /* ── LOGO SVG GLOW ── */
+        .logo-glow { filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.38)); }
+
+        /* ── ICON BOX ── */
+        .icon-box {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.16);
+        }
+
+        /* ── STAGED FILE ITEM ── */
+        .staged-item {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: border-color 0.2s;
+        }
+        .staged-item:hover { border-color: rgba(245, 158, 11, 0.20); }
+
+        /* ── SPINNER ── */
+        .spinner-gold {
+            border: 3px solid rgba(245, 158, 11, 0.12);
+            border-top-color: #f59e0b;
+            border-radius: 50%;
+            animation: tsaSpin 0.85s linear infinite;
+            box-shadow: 0 0 22px rgba(245, 158, 11, 0.32);
+        }
+
+        /* ── KEYFRAMES ── */
+        @keyframes tsaSpin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes tsaPing {
+            75%, 100% { transform: scale(2.2); opacity: 0; }
+        }
+        @keyframes tsaPulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(245,158,11,0.45); }
+            50% { opacity: 0.65; box-shadow: 0 0 14px rgba(245,158,11,0.75); }
+        }
+        .animate-ping  { animation: tsaPing  1.2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        .animate-pulse { animation: tsaPulse 2.2s ease-in-out infinite; }
+
+        /* ── MONO LABEL ── */
+        .mono-label {
+            font-family: 'SF Mono', 'Fira Code', 'Roboto Mono', monospace;
+            color: #64748b;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(3, 7, 18, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.22); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(245, 158, 11, 0.42); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: rgba(1, 3, 10, 0.96);
+            border-top: 1px solid rgba(245, 158, 11, 0.07);
+        }
+
+        /* ── FAQ ARROW TRANSITION ── */
+        .faq-arrow { transition: transform 0.25s ease; }
+        .faq-arrow.open { transform: rotate(180deg); }
     </style>
 </head>
-<body class="text-slate-100 font-sans min-h-screen flex flex-col antialiased">
 
-    <!-- Emergency Regulatory Compliance Notification Banner -->
-    <div class="bg-amber-950/60 border-b border-amber-800 text-amber-200 px-4 py-3 text-center text-xs md:text-sm leading-relaxed">
-        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2">
+<body class="text-slate-100 antialiased min-h-screen flex flex-col">
+
+    <!-- ════ BACKGROUND LAYERS ════════════════════════════════════════ -->
+    <div class="bg-texture-layer"  aria-hidden="true"></div>
+    <div class="bg-gradient-layer" aria-hidden="true"></div>
+
+    <!-- ════ REGULATORY ALERT BANNER ═════════════════════════════════ -->
+    <div class="regulatory-banner text-amber-200 px-4 py-2.5 text-center text-xs leading-relaxed relative z-10">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-2.5">
             <span class="flex h-2 w-2 relative shrink-0">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
-            <p>
-                <strong>⚠️ SARS SYSTEM ALERT (CARF REGULATORY COMPLIANCE 2026):</strong> All centralized SA exchanges (Luno, VALR, AltCoinTrader) are legally mandated to automate direct data streaming of your wallet transactions to SARS. Undisclosed self-custody wallet transfers are now a high-priority trigger for automated audits.
+            <p class="text-amber-200/85">
+                <strong class="text-amber-400">⚠️ SARS SYSTEM ALERT (CARF REGULATORY COMPLIANCE 2026):</strong>
+                All centralized SA exchanges (Luno, VALR, AltCoinTrader) are legally mandated to automate direct data streaming of your wallet transactions to SARS. Undisclosed self-custody wallet transfers are now a high-priority trigger for automated audits.
             </p>
         </div>
     </div>
 
-    <!-- Navigation Header -->
-    <header class="bg-[#0f172a] border-b border-slate-800 sticky top-0 z-40 backdrop-blur-md bg-opacity-95">
+    <!-- ════ NAVIGATION HEADER ════════════════════════════════════════ -->
+    <header class="header-glass sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+
+            <!-- LOGO -->
             <div class="flex items-center gap-3">
-                <svg class="h-8 w-8 text-[#f59e0b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-                <div class="text-lg md:text-xl font-extrabold tracking-tight text-white">
-                    TAX-SHIELD<span class="text-[#f59e0b] font-bold ml-1">SA</span>
+                <div class="logo-glow">
+                    <svg class="h-10 w-10" viewBox="0 0 44 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="shieldBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%"   stop-color="#94a3b8"/>
+                                <stop offset="30%"  stop-color="#e2e8f0"/>
+                                <stop offset="65%"  stop-color="#64748b"/>
+                                <stop offset="100%" stop-color="#1e293b"/>
+                            </linearGradient>
+                            <linearGradient id="checkGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%"   stop-color="#fde68a"/>
+                                <stop offset="50%"  stop-color="#f59e0b"/>
+                                <stop offset="100%" stop-color="#b45309"/>
+                            </linearGradient>
+                            <linearGradient id="checkGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%"   stop-color="#6ee7b7"/>
+                                <stop offset="100%" stop-color="#047857"/>
+                            </linearGradient>
+                            <filter id="shieldDrop">
+                                <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="rgba(0,0,0,0.6)"/>
+                            </filter>
+                        </defs>
+                        <path d="M22 2L4 10v13c0 10.5 7.7 20.3 18 22.9C33.3 43.3 41 33.5 41 23V10L22 2z"
+                              fill="url(#shieldBody)" filter="url(#shieldDrop)"/>
+                        <path d="M22 2L4 10v13c0 10.5 7.7 20.3 18 22.9C33.3 43.3 41 33.5 41 23V10L22 2z"
+                              fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.7"/>
+                        <!-- Green layer (depth) -->
+                        <path d="M13 24.5l5.5 5.5L33 16.5"
+                              stroke="url(#checkGreen)" stroke-width="3.8"
+                              stroke-linecap="round" stroke-linejoin="round" opacity="0.80"/>
+                        <!-- Gold layer (foreground) -->
+                        <path d="M14.5 26l4.5 4.5 12.5-12.5"
+                              stroke="url(#checkGold)" stroke-width="3.2"
+                              stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-lg md:text-xl font-black tracking-tight text-white" style="text-shadow:0 0 24px rgba(255,255,255,0.1);">TAX-SHIELD</span>
+                    <span class="text-lg md:text-xl font-black tracking-tight text-gold-metallic">SA</span>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <span class="hidden md:inline-flex items-center gap-2 bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-full text-xs font-semibold text-[#f59e0b]">
-                    <span class="h-2 w-2 rounded-full bg-[#f59e0b] animate-pulse"></span>
+
+            <!-- NAV RIGHT -->
+            <div class="flex items-center gap-3">
+                <div class="status-badge hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold text-amber-400">
+                    <span class="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>
                     Live Network Sync Active
-                </span>
-                <button id="faq-scroll-btn" class="text-xs md:text-sm font-medium text-slate-400 hover:text-white transition">
+                </div>
+                <button id="faq-scroll-btn" class="btn-secondary text-xs md:text-sm font-medium px-3 py-1.5 rounded-lg">
                     FAQ Help
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Custom Secure Toast Notifications -->
-    <div id="toast-notification" class="hidden fixed bottom-5 right-5 z-50 bg-[#0f172a] border-2 border-slate-700 text-slate-100 px-5 py-4 rounded-xl shadow-2xl flex flex-col gap-1 max-w-sm transition duration-300 transform translate-y-10 opacity-0">
-        <div class="flex items-center justify-between">
-            <span id="toast-title" class="font-bold text-sm text-white">System Notification</span>
-            <button id="toast-close-btn" class="text-slate-400 hover:text-white text-lg">&times;</button>
+    <!-- ════ TOAST NOTIFICATION ═══════════════════════════════════════ -->
+    <div id="toast-notification"
+         class="glass-toast hidden fixed bottom-5 right-5 z-50 px-5 py-4 rounded-2xl flex flex-col gap-1.5 max-w-sm transition-all duration-300 transform translate-y-10 opacity-0">
+        <div class="flex items-center justify-between gap-3">
+            <span id="toast-title"   class="font-black text-sm text-white">System Notification</span>
+            <button id="toast-close-btn" class="text-slate-500 hover:text-white text-xl leading-none ml-2 flex-shrink-0">&times;</button>
         </div>
-        <p id="toast-message" class="text-xs text-slate-300 leading-relaxed"></p>
+        <p id="toast-message" class="text-xs text-slate-400 leading-relaxed"></p>
     </div>
 
-    <!-- Main Workspace -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        <section class="text-center max-w-4xl mx-auto mb-10">
-            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-                Shield Your Crypto Assets From Automated SARS Audits.
+    <!-- ════ MAIN WORKSPACE ═══════════════════════════════════════════ -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full relative z-10">
+
+        <!-- HERO COPY -->
+        <section class="text-center max-w-4xl mx-auto mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-5"
+                style="text-shadow:0 0 40px rgba(255,255,255,0.06);">
+                Shield Your Crypto Assets From<br>
+                <span class="text-gold-metallic">Automated SARS Audits.</span>
             </h1>
-            <p class="text-sm sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
-                Instantly calculate your Capital Gains exposure and simulate your personal audit risk before the tax deadline. Runs completely inside your browser—<span class="text-[#f59e0b] font-semibold">100% private</span>. Your transaction records never leave your computer.
+            <p class="text-sm sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto mb-3">
+                Instantly calculate your Capital Gains exposure and simulate your personal audit risk before the tax deadline.
+                Runs completely inside your browser — <span class="text-amber-400 font-bold">100% private</span>.
+                Your transaction records never leave your computer.
             </p>
-            <p class="text-xs sm:text-sm text-slate-400 italic mt-3">
-                Why pay a specialized tax consultant R1,500 to R3,500+ to reconcile exchange files? Secure your complete SARS-compliant Annexure B file in seconds for a fraction of the cost.
+            <p class="text-xs sm:text-sm text-slate-500 italic">
+                Why pay a specialized tax consultant R1,500–R3,500+ to reconcile exchange files? Secure your complete SARS-compliant Annexure B in seconds for a fraction of the cost.
             </p>
         </section>
 
-        <section id="interactive-workspace" class="max-w-4xl mx-auto bg-[#0f172a] border border-slate-700/80 rounded-2xl p-4 sm:p-8 shadow-2xl relative overflow-hidden mb-12">
-            
-            <!-- State 1: Ready to Upload (Supports multi-file dropping / stacking) -->
+        <!-- ════ INTERACTIVE WORKSPACE PANEL ═══════════════════════════ -->
+        <section id="interactive-workspace" class="glass-panel max-w-4xl mx-auto rounded-2xl p-5 sm:p-8 relative overflow-hidden mb-14">
+
+            <!-- ── STATE 1: UPLOAD ──────────────────────────────── -->
             <div id="state-upload" class="block">
-                <div class="text-center">
-                    <h2 class="text-lg sm:text-xl font-bold mb-1 text-white">Drop Exported Exchange CSVs Here</h2>
-                    <p class="text-xs sm:text-sm text-slate-400 mb-6">Drag & drop **one or multiple** CSV transaction history files simultaneously (Luno, VALR, etc.). Your files will show in the staged list below, allowing you to review your queue before starting analysis.</p>
+                <div class="text-center mb-6">
+                    <h2 class="text-lg sm:text-xl font-black text-white mb-1.5">Drop Exported Exchange CSVs Here</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-xl mx-auto">
+                        Drag & drop one or multiple CSV transaction history files (Luno, VALR, etc.).
+                        Files queue in the staging panel below before analysis begins.
+                    </p>
                 </div>
-                
-                <div id="drop-zone" class="border-2 border-dashed border-slate-600 hover:border-[#f59e0b] bg-[#0f172a]/60 rounded-xl p-6 sm:p-10 text-center cursor-pointer transition duration-200">
+
+                <!-- Drop Zone -->
+                <div id="drop-zone" class="drop-zone-premium rounded-xl p-8 sm:p-12 text-center cursor-pointer">
                     <input type="file" id="file-input" class="hidden" accept=".csv" multiple>
                     <div id="file-input-trigger" class="space-y-4">
-                        <svg class="mx-auto h-10 w-10 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <div class="text-xs sm:text-base font-semibold text-slate-200">
-                            Drag & drop your raw .csv files here, or <span class="text-[#f59e0b] hover:underline">browse files</span>
+                        <div class="mx-auto w-14 h-14 rounded-2xl icon-box flex items-center justify-center">
+                            <svg class="h-7 w-7 text-amber-500/65" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </div>
-                        <p class="text-[11px] sm:text-xs text-slate-400 max-w-xs mx-auto">
-                            Staging multiple files lets you stitch Luno and VALR trade streams together.
+                        <div class="text-sm sm:text-base font-semibold text-slate-200">
+                            Drag & drop your raw <code class="text-amber-400 font-mono bg-amber-400/10 px-1.5 py-0.5 rounded text-xs">.csv</code> files here, or
+                            <span class="text-gold-metallic hover:underline cursor-pointer">browse files</span>
+                        </div>
+                        <p class="text-xs text-slate-500 max-w-xs mx-auto">
+                            Staging multiple files stitches Luno and VALR trade streams for accurate chronological FIFO calculations.
                         </p>
                     </div>
                 </div>
 
-                <!-- Staged Files List (Hidden by default, holds staged files list and 'Done' button) -->
-                <div id="staged-files-container" class="hidden mt-6 bg-[#0f172a]/80 border border-slate-700/80 rounded-xl p-4 animate-fade-in">
+                <!-- Staged Files Container -->
+                <div id="staged-files-container" class="hidden mt-5 glass-card rounded-xl p-4">
                     <h3 class="text-xs sm:text-sm font-bold text-slate-200 mb-3 flex items-center justify-between">
-                        <span>Staged Documents for Multi-Exchange Sorting</span>
-                        <span id="staged-count-badge" class="bg-[#f59e0b]/20 text-[#f59e0b] text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full font-semibold">0 Files Staged</span>
+                        <span class="flex items-center gap-2">
+                            <svg class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Staged Documents for Multi-Exchange Sorting
+                        </span>
+                        <span id="staged-count-badge" class="badge-gold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full font-black">0 Files Staged</span>
                     </h3>
-                    
-                    <div id="staged-files-list" class="space-y-2 mb-4 max-h-40 overflow-y-auto pr-1">
-                        <!-- Populated dynamically via JS -->
+
+                    <div id="staged-files-list" class="space-y-2 mb-4 max-h-36 overflow-y-auto pr-1">
+                        <!-- JS-populated -->
                     </div>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-800">
-                        <span class="text-xs text-slate-400 text-center sm:text-left">Staged files are kept secure & local inside your browser memory.</span>
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 gold-divider mt-3">
+                        <span class="text-xs text-slate-500 text-center sm:text-left">Files are kept secure inside browser memory only.</span>
                         <div class="flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end">
-                            <button id="clear-all-staged-btn" class="text-xs text-slate-400 hover:text-red-400 transition font-semibold px-2 py-1">
+                            <button id="clear-all-staged-btn" class="text-xs text-slate-500 hover:text-red-400 transition font-semibold px-2 py-1">
                                 Clear All
                             </button>
-                            <button id="process-staged-files-btn" class="bg-[#f59e0b] hover:bg-[#e58e0a] text-slate-950 text-xs font-bold py-2.5 px-4 sm:px-6 rounded-lg shadow-md hover:shadow-[#f59e0b]/15 transition flex items-center gap-1.5 justify-center w-full sm:w-auto">
+                            <button id="process-staged-files-btn" class="btn-gold-metallic text-xs font-black py-2.5 px-5 sm:px-7 rounded-xl flex items-center gap-1.5 justify-center w-full sm:w-auto">
                                 ⚡ Analyze Staged Files (Done)
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-6 flex items-start gap-3 bg-[#0f172a]/55 rounded-lg p-4 border border-slate-800 text-xs text-slate-400">
-                    <svg class="h-5 w-5 text-[#f59e0b] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                <!-- Privacy Guarantee -->
+                <div class="mt-5 flex items-start gap-3 rounded-xl p-4 text-xs text-slate-400"
+                     style="background:rgba(3,7,18,0.42); border:1px solid rgba(255,255,255,0.05);">
+                    <svg class="h-4 w-4 text-amber-500/65 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                     </svg>
                     <div>
-                        <strong class="text-slate-300">🔒 100% Client-Side Privacy Guarantee:</strong> Your files are parsed locally inside your computer's temporary browser memory thread. Absolutely zero transaction records or wallet addresses are uploaded to a database or sent over a network.
+                        <strong class="text-slate-300">🔒 100% Client-Side Privacy Guarantee:</strong>
+                        Your files are parsed locally inside your computer's temporary browser memory. Zero transaction records or wallet addresses are ever uploaded to a database or transmitted over any network.
                     </div>
                 </div>
-            </div>
+            </div><!-- /state-upload -->
 
-            <!-- State 2: Local Calculation Animation State -->
+            <!-- ── STATE 2: PROCESSING ──────────────────────────── -->
             <div id="state-processing" class="hidden">
-                <div class="py-12 flex flex-col items-center justify-center">
-                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-700 border-t-[#f59e0b] mb-6"></div>
-                    <h3 class="text-base sm:text-lg font-bold text-white mb-2">Analyzing Transaction History Locally</h3>
-                    
-                    <div class="w-full max-w-md bg-[#0f172a] rounded-full h-2 mb-4 overflow-hidden">
-                        <div id="progress-bar" class="bg-[#f59e0b] h-full w-0 transition-all duration-300"></div>
+                <div class="py-16 flex flex-col items-center justify-center gap-5">
+                    <div class="spinner-gold h-14 w-14"></div>
+                    <div class="text-center">
+                        <h3 class="text-base sm:text-lg font-black text-white mb-1">Analyzing Transaction History Locally</h3>
+                        <p class="text-xs text-slate-500">Performing chronological FIFO matching inside browser memory</p>
                     </div>
-                    
-                    <p id="processing-step" class="text-xs md:text-sm font-mono text-slate-400">Initializing extraction logic...</p>
+                    <div class="w-full max-w-md h-1.5 rounded-full overflow-hidden progress-track">
+                        <div id="progress-bar" class="w-0 h-full rounded-full"></div>
+                    </div>
+                    <p id="processing-step" class="mono-label text-xs">Initializing extraction logic...</p>
                 </div>
-            </div>
+            </div><!-- /state-processing -->
 
-            <!-- State 3: Interactive Ledger Dashboard Results -->
-            <div id="state-results" class="hidden space-y-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-4">
-                    <h3 class="text-md sm:text-lg font-bold text-white">Interactive Risk-Assessment & Audit Dashboard</h3>
-                    <button id="reset-parser-btn" class="text-xs text-slate-400 hover:text-white underline transition text-left">
-                        Reset and Load New CSVs
+            <!-- ── STATE 3: RESULTS DASHBOARD ───────────────────── -->
+            <div id="state-results" class="hidden space-y-5">
+
+                <!-- Dashboard Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 gold-divider">
+                    <h3 class="text-[10px] uppercase tracking-widest font-black text-slate-500">
+                        Interactive Risk-Assessment &amp; Audit Dashboard
+                    </h3>
+                    <button id="reset-parser-btn" class="text-xs text-slate-500 hover:text-amber-400 transition flex items-center gap-1.5">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Reset &amp; Load New CSVs
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-[#0f172a] border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
-                        <span class="text-xs text-slate-400 uppercase font-semibold">Total Trades Evaluated</span>
-                        <div id="calc-tx-count" class="text-xl sm:text-2xl font-extrabold text-white mt-1">0 Trades</div>
+                <!-- STAT CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+                    <div class="glass-card rounded-xl p-4 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] uppercase tracking-widest font-black text-slate-500">Total Trades Evaluated</span>
+                            <svg class="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div id="calc-tx-count" class="text-2xl sm:text-3xl font-black text-white">0 Trades</div>
                     </div>
-                    <div class="bg-[#0f172a] border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
-                        <span class="text-xs text-slate-400 uppercase font-semibold">Net Capital Gain / Loss</span>
-                        <div id="calc-net-gain" class="text-xl sm:text-2xl font-extrabold text-white mt-1">R0.00</div>
+
+                    <div class="glass-card-gold rounded-xl p-4 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] uppercase tracking-widest font-black text-amber-600/80">Net Capital Gain / Loss</span>
+                            <svg class="h-4 w-4 text-amber-700/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                        </div>
+                        <div id="calc-net-gain" class="text-2xl sm:text-3xl font-black text-gold-metallic">R0.00</div>
                     </div>
-                    <div class="bg-[#0f172a] border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
-                        <span class="text-xs text-slate-400 uppercase font-semibold">SARS Annual Exclusion Used</span>
-                        <div id="calc-exemption" class="text-xl sm:text-2xl font-extrabold text-white mt-1">R0.00</div>
+
+                    <div class="glass-card rounded-xl p-4 flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[9px] uppercase tracking-widest font-black text-slate-500">SARS Annual Exclusion Used</span>
+                            <svg class="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <div id="calc-exemption" class="text-2xl sm:text-3xl font-black text-white">R0.00</div>
                     </div>
                 </div>
 
-                <div id="audit-risk-banner" class="hidden"></div>
+                <!-- AUDIT RISK BANNER (JS-populated) -->
+                <div id="audit-risk-banner" class="hidden rounded-xl p-4"></div>
 
-                <!-- Blurred data table wrapper with structural minimum heights to prevent layout issues -->
-                <div class="relative bg-[#0f172a] border border-slate-800 rounded-xl p-4 overflow-hidden min-h-[520px] md:min-h-[460px] flex flex-col justify-between">
-                    <div id="data-table-container" class="space-y-4">
-                        <div class="flex justify-between border-b border-slate-800 pb-2 text-[11px] md:text-xs font-bold font-mono text-slate-200 uppercase tracking-wide">
+                <!-- DATA TABLE WRAPPER -->
+                <div class="relative glass-card rounded-xl p-4 overflow-hidden" style="min-height:500px; display:flex; flex-direction:column; justify-content:space-between;">
+
+                    <div id="data-table-container" class="space-y-3">
+                        <div class="table-header-divider flex justify-between pb-3 text-[9px] md:text-[10px] font-black font-mono text-slate-500 uppercase tracking-widest">
                             <span class="w-1/4">Transaction Date</span>
                             <span class="w-1/4">Asset Pair</span>
                             <span class="w-1/4 text-right">Net Position</span>
                             <span class="w-1/4 text-right">Category</span>
                         </div>
-                        <div id="dynamic-trades-rows" class="space-y-3 blur-preview">
-                            <!-- Populated dynamically via JS -->
+                        <div id="dynamic-trades-rows" class="space-y-2.5 blur-preview">
+                            <!-- JS-populated -->
                         </div>
                     </div>
 
-                    <!-- Paywall overlay layout -->
-                    <div id="paywall-overlay" class="absolute inset-0 bg-[#0f172a]/90 flex flex-col justify-center items-center p-4 sm:p-6 text-center overflow-y-auto">
-                        <div class="max-w-md mx-auto space-y-4 my-auto">
-                            <h4 class="text-base sm:text-lg font-bold text-white leading-snug">Unlock Your Print-Ready SARS Annexure B Report</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed font-medium">
-                                Unlock the fully calculated, pre-formatted spreadsheet ledger mapped exactly to the required SARS Annexure B reporting columns, alongside our step-by-step Audit Defense & VDP Compliance Manual.
-                            </p>
-                            <div class="bg-[#0f172a] border border-slate-800 rounded-lg px-4 py-2 w-max mx-auto">
-                                <span class="text-[10px] text-slate-300 uppercase font-bold tracking-wider">Total Price</span>
-                                <div class="text-lg sm:text-xl font-extrabold text-[#f59e0b]">R350.00 <span class="text-xs font-normal text-slate-400">(Approx. 19.50 USDC)</span></div>
+                    <!-- ── PAYWALL OVERLAY ─────────────────────── -->
+                    <div id="paywall-overlay" class="absolute inset-0 flex flex-col justify-center items-center p-5 sm:p-8 text-center overflow-y-auto rounded-xl">
+                        <div class="max-w-sm mx-auto space-y-5 my-auto">
+
+                            <div class="mx-auto h-14 w-14 rounded-2xl icon-box flex items-center justify-center">
+                                <svg class="h-7 w-7 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
                             </div>
 
-                            <button id="pay-btn" class="w-full max-w-xs bg-[#f59e0b] hover:bg-[#e58e0a] text-slate-950 font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-[#f59e0b]/20 transform hover:-translate-y-0.5 transition duration-150 text-xs sm:text-sm">
-                                ⚡ Connect & Pay via Trust Wallet
+                            <div>
+                                <h4 class="text-base sm:text-lg font-black text-white leading-snug mb-2">
+                                    Unlock Your Print-Ready<br>SARS Annexure B Report
+                                </h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Unlock the fully calculated, pre-formatted spreadsheet ledger mapped to the required SARS Annexure B reporting columns, plus the step-by-step Audit Defense &amp; VDP Compliance Manual.
+                                </p>
+                            </div>
+
+                            <div class="price-box rounded-xl px-6 py-3 inline-block mx-auto">
+                                <span class="text-[9px] text-slate-500 uppercase font-black tracking-widest block mb-0.5">Total Price</span>
+                                <div class="text-2xl font-black text-gold-metallic">R350.00</div>
+                                <span class="text-[10px] text-slate-500">(Approx. 19.50 USDC on Base)</span>
+                            </div>
+
+                            <button id="pay-btn" class="btn-gold-metallic w-full max-w-xs mx-auto block py-3.5 px-6 rounded-xl text-xs sm:text-sm">
+                                ⚡ Connect &amp; Pay via Trust Wallet
                             </button>
-                            
-                            <div class="block">
-                                <button id="payment-accordion-toggle-btn" class="text-xs text-slate-400 hover:text-white underline transition font-semibold">
+
+                            <div>
+                                <button id="payment-accordion-toggle-btn" class="text-xs text-slate-500 hover:text-amber-400 transition font-semibold underline underline-offset-2">
                                     How to pay if you only have funds on Luno/VALR?
                                 </button>
                             </div>
 
-                            <!-- Fallback User Instructions Accordion -->
-                            <div id="payment-accordion" class="hidden text-left bg-[#0f172a] border border-slate-800 rounded-lg p-4 text-xs text-slate-300 space-y-2 max-h-48 overflow-y-auto">
-                                <p class="font-bold border-b border-slate-800 pb-1.5 text-slate-200">Payment steps for exchange-only users:</p>
+                            <div id="payment-accordion" class="hidden text-left rounded-xl p-4 text-xs text-slate-300 space-y-2 max-h-48 overflow-y-auto"
+                                 style="background:rgba(3,7,18,0.55); border:1px solid rgba(255,255,255,0.06);">
+                                <p class="font-bold text-slate-200 pb-1.5" style="border-bottom:1px solid rgba(255,255,255,0.06);">Payment steps for exchange-only users:</p>
                                 <ol class="list-decimal pl-4 space-y-1.5 text-slate-400">
-                                    <li>Download <strong>Trust Wallet</strong> on your mobile phone from the official App Store or Google Play.</li>
-                                    <li>Select and copy your Trust Wallet <strong>USDC</strong> receive address (make sure to select the <strong>Base Network</strong> for lowest fee execution).</li>
-                                    <li>Navigate to your Luno or VALR app, purchase $19.50 USD worth of USDC, and withdraw it directly to your Trust Wallet address.</li>
-                                    <li>Return to this page, select <strong>"Connect & Pay"</strong>, and confirm the transaction through your phone with one tap.</li>
+                                    <li>Download <strong class="text-slate-300">Trust Wallet</strong> from the official App Store or Google Play.</li>
+                                    <li>Copy your Trust Wallet <strong class="text-slate-300">USDC receive address</strong> on the <strong class="text-slate-300">Base Network</strong>.</li>
+                                    <li>On Luno or VALR, purchase $19.50 USD of USDC and withdraw to your Trust Wallet address.</li>
+                                    <li>Return here, tap <strong class="text-slate-300">"Connect &amp; Pay"</strong>, and confirm in one tap.</li>
                                 </ol>
                             </div>
                         </div>
-                    </div>
+                    </div><!-- /paywall-overlay -->
 
-                    <!-- Active Unlocked Dashboard Area -->
-                    <div id="unlocked-dashboard" class="hidden absolute inset-0 bg-[#0f172a]/95 flex flex-col p-4 sm:p-6 overflow-y-auto rounded-xl">
-                        <div class="flex flex-col items-center justify-center text-center pb-6 border-b border-slate-800/80 mb-6">
-                            <div class="h-10 w-10 rounded-full bg-[#f59e0b] text-slate-950 flex items-center justify-center font-bold text-xl mb-2">✓</div>
-                            <h4 class="text-base sm:text-lg font-bold text-[#f59e0b]">Cryptographic Ledger Payment Cleared</h4>
-                            <p class="text-xs text-slate-400 max-w-md">
-                                Your transaction cleared successfully on-chain. Below are your compiled SARS reports, downloadable spreadsheets, and the step-by-step Audit Defense & VDP Compliance Manual.
-                            </p>
+                    <!-- ── UNLOCKED DASHBOARD ─────────────────── -->
+                    <div id="unlocked-dashboard" class="hidden absolute inset-0 flex flex-col p-5 sm:p-7 overflow-y-auto rounded-xl">
+
+                        <div class="flex flex-col items-center text-center pb-5 mb-5 gold-divider">
+                            <div class="btn-gold-metallic h-12 w-12 rounded-full flex items-center justify-center font-black text-xl mb-3 flex-shrink-0" style="padding:0;">✓</div>
+                            <h4 class="text-base sm:text-lg font-black text-gold-metallic">Cryptographic Ledger Payment Cleared</h4>
+                            <p class="text-xs text-slate-400 max-w-md mt-1.5">Your transaction cleared on-chain. Download your compiled SARS reports below.</p>
                         </div>
 
-                        <!-- Action Buttons Row -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                            <button id="download-ledger-btn" class="flex items-center justify-center gap-2 bg-[#f59e0b] hover:bg-[#e58e0a] text-slate-950 font-bold py-3 px-4 rounded-lg shadow-md transition text-xs sm:text-sm">
-                                📥 Download Compiled Annexure B (.CSV)
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                            <button id="download-ledger-btn" class="btn-gold-metallic flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm">
+                                📥 Download Annexure B (.CSV)
                             </button>
-                            <button id="print-audit-cert-btn" class="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-4 rounded-lg border border-slate-700 transition text-xs sm:text-sm">
+                            <button id="print-audit-cert-btn" class="btn-secondary flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm">
                                 🖨️ Print / Save Compliance PDF
                             </button>
                         </div>
 
-                        <!-- Dynamic VDP Manual Dropdown System -->
-                        <div class="text-left space-y-3 bg-[#0f172a] border border-slate-800 rounded-xl p-4">
-                            <h5 class="text-xs sm:text-sm font-bold text-white border-b border-slate-800 pb-2">📂 Step-by-Step VDP & Audit Defense Manual</h5>
-                            
-                            <div class="space-y-2 text-xs text-slate-300">
+                        <div class="vdp-box rounded-xl p-4 text-left space-y-3">
+                            <h5 class="text-xs sm:text-sm font-black text-white pb-2 gold-divider">
+                                📂 Step-by-Step VDP &amp; Audit Defense Manual
+                            </h5>
+                            <div class="space-y-2.5 text-xs text-slate-300 pt-1">
                                 <p class="leading-relaxed">
-                                    <strong class="text-[#f59e0b]">Step 1: Declare Your Realized Gains in ITR12:</strong> Open your SARS ITR12 wizard. On the Wizard Questions menu, check "Yes" under the Capital Gains Tax (CGT) section to display the standard local asset declaration fields.
+                                    <strong class="text-amber-400">Step 1 — Declare in ITR12:</strong>
+                                    Open your SARS ITR12 wizard and enable the Capital Gains Tax section to display the Annexure B declaration fields.
                                 </p>
                                 <p class="leading-relaxed">
-                                    <strong class="text-[#f59e0b]">Step 2: Append the Annexure B Ledger:</strong> Drop the downloaded CSV sheet directly as an attachment under your Capital Gains profile. Our spreadsheet outputs calculations starting on Row 1 to bypass automated scanner verification rejects.
+                                    <strong class="text-amber-400">Step 2 — Append the Ledger:</strong>
+                                    Attach the downloaded CSV under your Capital Gains profile. Output starts on Row 1 to pass SARS scanner verification.
                                 </p>
                                 <p class="leading-relaxed">
-                                    <strong class="text-[#f59e0b]">Step 3: Voluntary Disclosure Program (VDP) Process:</strong> If you did not declare historical gains from prior tax cycles, navigate to the VDP tab on SARS eFiling to register a voluntary disclosure before a formal audit occurs. This legally waives standard administrative and understatement fines.
+                                    <strong class="text-amber-400">Step 3 — VDP Registration:</strong>
+                                    For prior undeclared cycles, use the VDP tab on SARS eFiling before a formal audit occurs — this legally waives understatement penalties.
                                 </p>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div><!-- /unlocked-dashboard -->
 
-                <!-- Memory Wipe One-Click Purge Button -->
-                <div class="flex justify-end pt-2">
-                    <button id="purge-variables-btn" class="text-xs text-slate-500 hover:text-red-400 flex items-center gap-1 transition">
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </div><!-- /data-table-wrapper -->
+
+                <!-- Purge Button -->
+                <div class="flex justify-end pt-1">
+                    <button id="purge-variables-btn" class="text-[11px] text-slate-600 hover:text-red-400 flex items-center gap-1.5 transition font-medium">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
                         Wipe Calculations from Local Browser Memory
                     </button>
                 </div>
-            </div>
-        </section>
 
-        <!-- Help FAQ Section Layout -->
-        <section id="faq-section" class="max-w-4xl mx-auto mb-16">
-            <h3 class="text-xl sm:text-2xl font-bold text-white text-center mb-8">Frequently Asked Questions</h3>
-            <div class="space-y-4">
-                <div class="bg-[#0f172a] border border-slate-700/60 rounded-xl overflow-hidden">
+            </div><!-- /state-results -->
+        </section><!-- /interactive-workspace -->
+
+        <!-- ════ FAQ SECTION ═════════════════════════════════════════ -->
+        <section id="faq-section" class="max-w-4xl mx-auto mb-20">
+            <h3 class="text-xl sm:text-2xl font-black text-white text-center mb-8">
+                Frequently Asked Questions
+            </h3>
+            <div class="space-y-3">
+
+                <div class="glass-faq rounded-xl overflow-hidden">
                     <button id="faq-toggle-1" class="w-full px-6 py-4 flex items-center justify-between text-left font-semibold text-slate-200 hover:text-white text-sm sm:text-base transition">
                         <span>Is crypto taxable in South Africa?</span>
-                        <svg id="faq-arrow-1" class="h-5 w-5 text-slate-400 transform transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                        <svg id="faq-arrow-1" class="faq-arrow h-4 w-4 text-amber-500/65 flex-shrink-0 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
-                    <div id="faq-answer-1" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-900/40 pt-3">
-                        Yes. Under South African tax law, cryptocurrency is treated as an intangible asset. When you sell, trade, swap, or use cryptocurrency to make payments, it is subject to either Income Tax (if you are deemed a trader) or Capital Gains Tax (if you hold it as an investment).
+                    <div id="faq-answer-1" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed pt-3"
+                         style="border-top:1px solid rgba(255,255,255,0.04);">
+                        Yes. Under South African tax law, cryptocurrency is treated as an intangible asset. When you sell, trade, swap, or use crypto to make payments, it is subject to either Income Tax (if deemed a trader) or Capital Gains Tax (if held as an investment).
                     </div>
                 </div>
 
-                <div class="bg-[#0f172a] border border-slate-700/60 rounded-xl overflow-hidden">
+                <div class="glass-faq rounded-xl overflow-hidden">
                     <button id="faq-toggle-2" class="w-full px-6 py-4 flex items-center justify-between text-left font-semibold text-slate-200 hover:text-white text-sm sm:text-base transition">
                         <span>What is the SARS crypto tax exemption limit?</span>
-                        <svg id="faq-arrow-2" class="h-5 w-5 text-slate-400 transform transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                        <svg id="faq-arrow-2" class="faq-arrow h-4 w-4 text-amber-500/65 flex-shrink-0 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
-                    <div id="faq-answer-2" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-900/40 pt-3">
-                        In South Africa, the individual annual capital gains tax exclusion limit is <strong>R50,000</strong>. If your net capital gains across all assets do not exceed R50,000 for the tax year, you do not owe capital gains tax. However, you are still legally required to declare the transaction histories on your ITR12 return using a structured Annexure B ledger.
+                    <div id="faq-answer-2" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed pt-3"
+                         style="border-top:1px solid rgba(255,255,255,0.04);">
+                        The individual annual CGT exclusion is <strong class="text-slate-300">R40,000</strong>. If your net capital gains across all assets do not exceed R40,000 for the tax year, no CGT is payable. However, you are still legally required to declare transaction histories on your ITR12 using a structured Annexure B ledger.
                     </div>
                 </div>
 
-                <div class="bg-[#0f172a] border border-slate-700/60 rounded-xl overflow-hidden">
+                <div class="glass-faq rounded-xl overflow-hidden">
                     <button id="faq-toggle-3" class="w-full px-6 py-4 flex items-center justify-between text-left font-semibold text-slate-200 hover:text-white text-sm sm:text-base transition">
                         <span>How does the CARF 2026 rule affect my wallet?</span>
-                        <svg id="faq-arrow-3" class="h-5 w-5 text-slate-400 transform transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                        <svg id="faq-arrow-3" class="faq-arrow h-4 w-4 text-amber-500/65 flex-shrink-0 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
-                    <div id="faq-answer-3" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-900/40 pt-3">
-                        Under the global Crypto-Asset Reporting Framework (CARF) implemented in South Africa, domestic exchanges are connected to automated streaming pipelines. If you withdraw cryptocurrency from a domestic exchange to an undisclosed external wallet (like Trust Wallet), SARS registers that transfer and automated systems cross-verify if it was declared correctly. This audit check makes manual recordkeeping and structured Annexure B generation critical for asset safety.
+                    <div id="faq-answer-3" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed pt-3"
+                         style="border-top:1px solid rgba(255,255,255,0.04);">
+                        Under the global Crypto-Asset Reporting Framework (CARF) implemented in South Africa, domestic exchanges are connected to automated streaming pipelines. Withdrawals to an undisclosed external wallet trigger automated cross-verification checks, making structured Annexure B generation critical for asset safety.
                     </div>
                 </div>
 
-                <div class="bg-[#0f172a] border border-slate-700/60 rounded-xl overflow-hidden">
+                <div class="glass-faq rounded-xl overflow-hidden">
                     <button id="faq-toggle-4" class="w-full px-6 py-4 flex items-center justify-between text-left font-semibold text-slate-200 hover:text-white text-sm sm:text-base transition">
                         <span>How is my privacy protected during calculation?</span>
-                        <svg id="faq-arrow-4" class="h-5 w-5 text-slate-400 transform transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                        <svg id="faq-arrow-4" class="faq-arrow h-4 w-4 text-amber-500/65 flex-shrink-0 ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
                     </button>
-                    <div id="faq-answer-4" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-900/40 pt-3">
-                        Our simulator is built with a zero-database structural approach. When you load a CSV, the PapaParse library parses the file inside your browser memory. No backend code runs, and zero transaction records or wallet addresses are sent over the network or saved to any database.
+                    <div id="faq-answer-4" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-400 leading-relaxed pt-3"
+                         style="border-top:1px solid rgba(255,255,255,0.04);">
+                        Our simulator operates with a zero-database architecture. PapaParse processes your CSV files entirely inside the browser's temporary memory. No backend code runs, and zero transaction records or wallet addresses are ever transmitted over any network or stored in any database.
                     </div>
                 </div>
+
             </div>
         </section>
-    </main>
 
-    <!-- Web3 Interactive modal window -->
-    <div id="wallet-modal-overlay" class="hidden fixed inset-0 bg-[#0f172a]/80 z-50 flex items-center justify-center p-4 animate-fade-in">
-        <div class="bg-[#0f172a] border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
-            <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
-                <div class="flex items-center gap-2">
-                    <div class="h-5 w-5 bg-[#f59e0b] rounded-md animate-pulse"></div>
-                    <span class="font-bold text-white text-xs sm:text-sm">Trust Wallet Web3 Payment Channel</span>
+    </main><!-- /main -->
+
+    <!-- ════ WEB3 PAYMENT MODAL ═══════════════════════════════════════ -->
+    <div id="wallet-modal-overlay"
+         class="hidden fixed inset-0 z-50 flex items-center justify-center p-4"
+         style="background:rgba(1,3,10,0.78); backdrop-filter:blur(7px);">
+        <div class="glass-modal rounded-2xl p-6 max-w-md w-full relative">
+
+            <div class="flex items-center justify-between mb-5 pb-3 gold-divider">
+                <div class="flex items-center gap-2.5">
+                    <div class="h-5 w-5 rounded-lg animate-pulse"
+                         style="background:linear-gradient(135deg,#f59e0b,#d97706);"></div>
+                    <span class="font-black text-white text-xs sm:text-sm tracking-wide">Trust Wallet Web3 Payment Channel</span>
                 </div>
-                <button id="close-payment-modal-btn" class="text-slate-500 hover:text-white text-xl">&times;</button>
+                <button id="close-payment-modal-btn" class="text-slate-500 hover:text-white text-xl leading-none">&times;</button>
             </div>
-            
-            <p class="text-xs text-slate-400 mb-4">Execute decentralized, peer-to-peer contract transfer securely:</p>
-            
-            <div class="bg-[#0f172a] border border-slate-800 rounded-lg p-4 space-y-3 mb-6">
+
+            <p class="text-xs text-slate-500 mb-4">Execute decentralized, peer-to-peer ERC-20 transfer on Base Mainnet:</p>
+
+            <div class="modal-info-row rounded-xl p-4 space-y-3 mb-5">
                 <div class="flex justify-between text-xs gap-2">
-                    <span class="text-slate-400 shrink-0 font-semibold">Receiver Address:</span>
-                    <span class="font-mono text-slate-300 truncate">0x8C46e26Fca65347B5fe1AA5A79Bd250698ca03B9</span>
+                    <span class="text-slate-500 shrink-0 font-semibold">Receiver Address:</span>
+                    <span class="font-mono text-slate-300 truncate text-right">0x8C46e26Fca65347B5fe1AA5A79Bd250698ca03B9</span>
                 </div>
                 <div class="flex justify-between text-xs">
-                    <span class="text-slate-400 font-semibold">Target Network:</span>
-                    <span class="font-mono text-[#f59e0b]">Base Mainnet (Layer-2)</span>
+                    <span class="text-slate-500 font-semibold">Target Network:</span>
+                    <span class="font-mono text-amber-400 font-bold">Base Mainnet (Layer-2)</span>
                 </div>
                 <div class="flex justify-between text-xs gap-2">
-                    <span class="text-slate-400 shrink-0 font-semibold">Contract Address:</span>
-                    <span class="font-mono text-slate-400 truncate">USDC (0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913)</span>
+                    <span class="text-slate-500 shrink-0 font-semibold">Contract:</span>
+                    <span class="font-mono text-slate-400 truncate text-right text-[10px]">USDC · 0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913</span>
                 </div>
-                <div class="flex justify-between text-sm font-bold border-t border-slate-800 pt-2.5">
+                <div class="flex justify-between text-sm font-black pt-2.5" style="border-top:1px solid rgba(255,255,255,0.05);">
                     <span class="text-slate-300">Total Due:</span>
-                    <span class="text-[#f59e0b]">19.50 USDC (~R350.00 ZAR)</span>
+                    <span class="text-gold-metallic">19.50 USDC (~R350.00 ZAR)</span>
                 </div>
             </div>
 
-            <div class="space-y-3">
-                <button id="modal-confirm-btn" class="w-full bg-[#f59e0b] hover:bg-[#e58e0a] text-slate-950 font-bold py-3 rounded-lg text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
+            <div class="space-y-2.5">
+                <button id="modal-confirm-btn" class="btn-gold-metallic w-full py-3.5 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2">
                     <span>Confirm Web3 Transfer</span>
                 </button>
-                <button id="modal-cancel-btn" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-lg text-xs transition">
+                <button id="modal-cancel-btn" class="btn-secondary w-full py-2.5 rounded-xl text-xs font-semibold">
                     Cancel Request
                 </button>
             </div>
+
         </div>
     </div>
 
-    <!-- Legal disclaimer footer layout -->
-    <footer class="bg-slate-950 border-t border-slate-900 py-12 px-4 sm:px-6 lg:px-8 text-center text-[10px] md:text-xs text-slate-500">
-        <div class="max-w-4xl mx-auto space-y-6">
-            <div class="flex items-center justify-center gap-2 text-slate-400 font-semibold mb-2">
-                <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    <!-- ════ FOOTER ══════════════════════════════════════════════════ -->
+    <footer class="py-12 px-4 sm:px-6 lg:px-8 text-center text-[10px] md:text-xs text-slate-600 relative z-10">
+        <div class="max-w-4xl mx-auto space-y-5">
+            <div class="flex items-center justify-center gap-2 text-slate-500 font-bold mb-1">
+                <svg class="h-3.5 w-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                 </svg>
-                <span class="uppercase tracking-wider">LEGAL COMPLIANCE DISCLOSURE & GENERAL DISCLAIMER</span>
+                <span class="uppercase tracking-widest text-[9px]">Legal Compliance Disclosure &amp; General Disclaimer</span>
             </div>
-            
             <p class="leading-relaxed">
-                <strong>FAIS EXEMPTION DISCLOSURE:</strong> The platform is an educational mathematical software tool. It does not provide formal tax, investment, financial, or wealth management advice. It does not act as a financial service provider (FSP) under South Africa's Financial Advisory and Intermediary Services (FAIS) Act 37 of 2002.
+                <strong class="text-slate-500">FAIS EXEMPTION DISCLOSURE:</strong>
+                The platform is an educational mathematical software tool. It does not provide formal tax, investment, financial, or wealth management advice. It does not act as a financial service provider (FSP) under South Africa's FAIS Act 37 of 2002.
             </p>
             <p class="leading-relaxed">
-                <strong>NON-CUSTODIAL & MERCHANT STATUS:</strong> The software does not custody, exchange, or transmit third-party funds. Payments made on this site are processed peer-to-peer for private software usage. No client-advisor relationship is established. Users are responsible for verifying calculations prior to submitting tax filings to SARS.
+                <strong class="text-slate-500">NON-CUSTODIAL &amp; MERCHANT STATUS:</strong>
+                The software does not custody, exchange, or transmit third-party funds. Payments are processed peer-to-peer for private software usage. No client-advisor relationship is established. Users are responsible for verifying calculations prior to submitting tax filings to SARS.
             </p>
-            
-            <p class="text-slate-600 pt-4 border-t border-slate-900">
-                &copy; 2026 TAX-SHIELD SA (sarstaxcheck.online). All Rights Reserved. Client-side browser logic encrypted.
-            </p>
+            <div class="gold-divider my-4"></div>
+            <p class="text-slate-700">&copy; 2026 TAX-SHIELD SA. All Rights Reserved. Client-side browser logic encrypted.</p>
         </div>
     </footer>
 
-    <!-- Main JavaScript Application Entry Point -->
+    <!-- ════ ES MODULE ENTRY POINT ════════════════════════════════════ -->
     <script type="module" src="js/main.js"></script>
+
 </body>
 </html>
